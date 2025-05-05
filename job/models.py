@@ -12,6 +12,9 @@ class Category(models.Model):
     
     def __str__(self):
         return self.name
+def upload_image(instance, file_name):
+    img_name ,extension = file_name.split(".")
+    return f"jobs/{instance.id}.{extension}"
 
 class Job(models.Model):
     title = models.CharField(max_length=200)
@@ -23,8 +26,9 @@ class Job(models.Model):
     salary = models.IntegerField(default=0)
     experience = models.IntegerField(default=1)
     category = models.ForeignKey('Category', verbose_name="Category", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to=upload_image)
     
     def __str__(self):
         return self.title
-
+    
 
